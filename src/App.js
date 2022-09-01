@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
 
+
+import{
+  Homepage,
+  BrowsePage,
+  CheckOutPage,
+  SigninPage,
+  SignupPage,
+  WishListPage
+} from"./pages";
+import { BrowserRouter as Router ,Switch} from 'react-router-dom';
+import {useAuthPersist,useSetPetsProductData} from "./hooks"
+import PublicRoute from "./routes/publicRoutes";
+import PrivateRoute from "./routes/privateRoutes";
 function App() {
+  useAuthPersist();
+  useSetPetsProductData();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <Router>
+    <Switch >
+      <PublicRoute component={Homepage} path="/" exact/>
+      <PublicRoute component={BrowsePage} path="/shopfor" />
+      <PrivateRoute component={CheckOutPage} path="/checkout" exact/>
+      <PublicRoute component={SigninPage} path="/signin" exact/>
+      <PublicRoute component={SignupPage} path="/signup" exact/>
+      <PrivateRoute component={WishListPage} path='/wishlist' exact/>
+    </Switch>
+  </Router>
+    
   );
 }
 
 export default App;
+
+

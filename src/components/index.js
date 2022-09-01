@@ -1,0 +1,5 @@
+export {default as Navbar} from "./navbar"
+export {default as Slider} from "./slider"
+export {default as Shopfor} from "./shopfor"
+export {default as Footer} from "./footer"
+export {default as Productard} from "./productCard"
