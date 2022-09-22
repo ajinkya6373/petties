@@ -6,6 +6,7 @@ display:flex;
 flex-wrap: wrap;
 justify-content: center;
 
+
 `
 export const SectionTitle = styled.div`
 font-weight: 600;

@@ -11,7 +11,7 @@ export const useAuthPersist = () => {
     setLoading } = useUserAuth();
 
     const {userDispatch,userData} =useUserData();
-    // console.log(userData);
+
     useEffect(()=>{
                    
       if(isUserLoggedIn && userProfile?._id){

@@ -4,7 +4,9 @@ import { createContext,useContext,useState} from "react";
 const AuthContext = createContext();
 
 export const AuthProvider =({children}) =>{
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+    // const a = JSON.parse(localStorage.getItem("login"))
+    // console.log(a);
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(JSON.parse(localStorage.getItem("login")));
     const [userProfile, setUserData] = useState({});
     const [ loading, setLoading ] = useState(true);
     return (
@@ -21,4 +23,4 @@ export const AuthProvider =({children}) =>{
     );
 };
 
-export const useUserAuth = ()=>useContext(AuthContext)
+export const useUserAuth =()=>useContext(AuthContext)

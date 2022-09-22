@@ -134,9 +134,6 @@ export default function Slider() {
             return <Dot key={slide} active={activeSlide===i} />
           })}
       </Dots>
-
-
-
     </Wrapper>
   )
 }

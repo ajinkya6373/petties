@@ -3,10 +3,11 @@
 import{
   Homepage,
   BrowsePage,
-  CheckOutPage,
+  CartPage,
   SigninPage,
   SignupPage,
-  WishListPage
+  WishListPage,
+  ProductPage
 } from"./pages";
 import { BrowserRouter as Router ,Switch} from 'react-router-dom';
 import {useAuthPersist,useSetPetsProductData} from "./hooks"
@@ -20,10 +21,11 @@ function App() {
     <Switch >
       <PublicRoute component={Homepage} path="/" exact/>
       <PublicRoute component={BrowsePage} path="/shopfor" />
-      <PrivateRoute component={CheckOutPage} path="/checkout" exact/>
+      <PrivateRoute component={CartPage} path="/cart" exact/>
       <PublicRoute component={SigninPage} path="/signin" exact/>
       <PublicRoute component={SignupPage} path="/signup" exact/>
       <PrivateRoute component={WishListPage} path='/wishlist' exact/>
+      <PublicRoute component={ProductPage} path='/product/:productId' exact/>
     </Switch>
   </Router>
     

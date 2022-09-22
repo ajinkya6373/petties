@@ -26,13 +26,15 @@ export const userReducer = (state,action)=>{
         case "ADD_TO_CART":{
             return {
                 ...state,
-                cartList:[...state.cartList,action.payload.product]
+                cartList:[...state.cartList,action.payload]
             }
         }
         case "REMOVE_FROM_CART":{
+            console.log(action.payload.product._id);
+            console.log(state.cartList);
             return {
                 ...state,
-                cartList:state.cartList.filter((p)=>p._id !== action.payload.product._id)
+                cartList:state.cartList.filter((p)=>p.product._id !== action.payload.product._id)
             }
         }
         default:

@@ -1,3 +1,4 @@
+
 export const BASE_URL = "http://localhost:4000";
 export const DropdowmItems = ["Recommended", "low to high", "high to low"];
 export const Ratings = ["4 stars & above", "3 stars & above", "2 stars & above", "1 stars & above"]
@@ -20,6 +21,7 @@ export const keywords = [
   'Aquarium Decor'
 
 ]
+
 
 export const getFilteredProductsByPets = (productList, filterList) => {
 
@@ -127,7 +129,7 @@ export const sortBySearchparams = (product, searchTerm) => {
     const searchData = [];
     product.forEach((p) => {
       searchTerm.forEach((i) => {
-        if ((p.name.toLowerCase().includes(i.toLowerCase()) || p.category.toLowerCase().includes(i.toLowerCase()) || p.description.toLowerCase().includes(i.toLowerCase()) ) && !searchData.includes(p) ) {
+        if ((p.name.toLowerCase().includes(i.toLowerCase()) || p.category.toLowerCase().includes(i.toLowerCase()) || p.description.toLowerCase().includes(i.toLowerCase())) && !searchData.includes(p)) {
           searchData.push(p);
         }
         else {
@@ -153,8 +155,8 @@ export const getTransformedProducts = ({
   checkRating,
   sort,
   searchTerm,
-  
-  
+
+
 }) => {
 
   const getsortBySearchparams = sortBySearchparams(

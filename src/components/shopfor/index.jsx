@@ -13,7 +13,6 @@ import {
 } from "./style/shopfor";
 
 import Productard from "../productCard"
-// import {productData,data} from "../../data";
 import { BASE_URL } from "../../utils/utils";
 
 
@@ -47,7 +46,7 @@ export default function Shopfor() {
             <Heading>Shop Accesories for</Heading>
             <Categories>
                {
-                  petsData?.pets?.map((pet, index) => {
+                  petsData?.pets?.map((pet) => {
                      return <Item onClick={() => history.push(
                       `/shopfor?petname=${encodeURIComponent(pet.name)}`,
                      )} key={pet._id}>

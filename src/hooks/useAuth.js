@@ -23,7 +23,6 @@ export const useAuth =()=>{
         if(res.data.success){
             setIsUserLoggedIn(true);
             setUserData(res.data.user);
-            console.log(res.data);
             if(redirectPath){
                 history.push(redirectPath);
                 return;

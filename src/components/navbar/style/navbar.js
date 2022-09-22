@@ -19,6 +19,8 @@ export const Navleft = styled.div`
 display:flex;
 align-items: center;
 margin-right: 4.145625rem;
+flex:1;
+justify-content: space-between;
 `
 
 export const Icon = styled.img`

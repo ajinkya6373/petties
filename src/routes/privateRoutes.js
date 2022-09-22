@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import {useUserAuth} from "../context"
  
 const PrivateRoute = ({component: Component, ...rest}) => {
-    const {isUserLoggedIn,userProfile} = useUserAuth();
+    const {isUserLoggedIn} = useUserAuth();
     return (
         <Route {...rest} render={props => (
             isUserLoggedIn ?

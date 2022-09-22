@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
 display:flex;
 flex-direction:column;
 width:14.75rem;
-// height:28.75rem;
 box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
 border-radius: 5px;
 margin-left:50px;
@@ -17,7 +16,24 @@ height: 17.5rem;
 overflow:hidden;
 position:relative;
 cursor: grab;
-
+`
+export const LikeBox = styled.div`
+cursor: pointer;
+position: absolute;
+right: 0.84rem;
+top: 0.93rem;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 32px;
+height: 32px;
+background: #D9D9D9;
+opacity: 0.4;
+border-radius:50%;
+z-index:111111;
+img{
+    opacity: 1;
+}
 `
 
 export const ProductTitle = styled.span`
@@ -50,8 +66,8 @@ font-weight: 500;
 font-size: 16px;
 line-height: 20px;
 color: #000000;
-margin-top:6px;
-margin-bottom:28px;
+margin-top:8px;
+margin-bottom:18px;
 span{
     font-weight: 600;
     font-size: 10px;
