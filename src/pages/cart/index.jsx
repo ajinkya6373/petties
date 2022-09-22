@@ -72,7 +72,7 @@ export default function CartPage() {
 
                     {
                         userData.cartList.map((p)=>{
-                          return  <ProductBox key={p.id}>
+                          return  <ProductBox key={p._id}>
                             <img src={p.product.imageUrl} alt="product-Img" />
                             <PBoxRight>
                                {p.product.name}
