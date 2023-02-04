@@ -7,7 +7,8 @@ import{
   SigninPage,
   SignupPage,
   WishListPage,
-  ProductPage
+  ProductPage,
+  ProfilePage
 } from"./pages";
 import { BrowserRouter as Router ,Switch} from 'react-router-dom';
 import {useAuthPersist,useSetPetsProductData} from "./hooks"
@@ -25,6 +26,7 @@ function App() {
       <PublicRoute component={SigninPage} path="/signin" exact/>
       <PublicRoute component={SignupPage} path="/signup" exact/>
       <PrivateRoute component={WishListPage} path='/wishlist' exact/>
+      <PrivateRoute component={ProfilePage} path='/profile' exact/>
       <PublicRoute component={ProductPage} path='/product/:productId' exact/>
     </Switch>
   </Router>

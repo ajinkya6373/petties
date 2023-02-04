@@ -21,7 +21,7 @@ export default function Productcard({ data }) {
     const history = useHistory();
     const location = useLocation();
     const path = location.pathname + location.search;
-    
+
     const clickHandler = (_id) => {
         if (isInWishList(_id)) {
             removeFromWishList(_id)
@@ -32,14 +32,15 @@ export default function Productcard({ data }) {
 
 
     return (
-        <Wrapper onClick={() => history.push(`/product/${data._id}`)}>
+        <Wrapper>
             <CardTop >
-                <SideBySideMagnifier
-                    imageSrc={data?.imageUrl}
-                    imageAlt="product Image"
-                    alwaysInPlace={true}
-
-                />
+                <div onClick={() => history.push(`/product/${data._id}`)}>
+                    <SideBySideMagnifier
+                        imageSrc={data?.imageUrl}
+                        imageAlt="product Image"
+                        alwaysInPlace={true}
+                    />
+                </div>
                 <LikeBox onClick={() => clickHandler(data._id)}>
                     {isInWishList(data._id)
                         ? <img src='/assets/Icons/like.svg' alt="like" />

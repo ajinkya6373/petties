@@ -6,7 +6,6 @@ display:flex;
 flex-wrap: wrap;
 justify-content: center;
 
-
 `
 export const SectionTitle = styled.div`
 font-weight: 600;
@@ -35,6 +34,7 @@ export const Label = styled.span`
     line-height: 17px;
     color: #999BA4;
     margin-left: 13px;
+    z-index:0;
 `
 export const Dot = styled.span`
 width: 7px;
@@ -52,6 +52,7 @@ export const Item = styled.div`
 position :relative;
 display:flex;
 margin-bottom:0.5rem;
+z-index:0;
 &:last-child {
     margin-bottom:1.8rem;
 }

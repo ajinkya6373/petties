@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { Navigate, useLocation } from "react-router";
 import { useAuth } from "../../hooks";
-import {useUserAuth} from "../../context"
+import { useUserAuth } from "../../context"
+import {
+  Navbar,
+  Footer,
+  FormInput
+} from "../../components";
+
+import {
+  Form,
+  Btn,
+
+} from "../signin/signin";
+
 export default function SignupPage() {
-  const {userProfile} = useUserAuth();
-  const location = useLocation();
-  const {signUpUser} = useAuth();
+  const { signUpUser } = useAuth();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +32,8 @@ export default function SignupPage() {
   );
 
 
+
+
   const signUpHandler = async (e) => {
     setSignUpError("");
     setLoading(true);
@@ -33,19 +44,25 @@ export default function SignupPage() {
         setLoading(false);
         return;
       }
-      const res = await signUpUser(
+       await signUpUser(
         name,
         email,
         password,
-        // path,
-        // addTo,
-        // productId
-      );
-      !res && setSignUpError("SIGNUP_ERROR");
+      ).then((res)=>{
+        if(res.data.success){
+          setSignUpError("Your Account Has been Created");
+        }
+  
+      }).catch((err)=>{
+        setSignUpError(err.response.data.message);
+      })
       setLoading(false);
       return;
     }
-    setSignUpError("FIELDS_EMPTY");
+    if(!isPasswordMatched){
+      setSignUpError("Both passwords must match!");
+    }
+    // setSignUpError("Plase fi");
     setLoading(false);
   };
 
@@ -53,41 +70,57 @@ export default function SignupPage() {
 
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-      <h1>SignupPage</h1>
-      <form style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }} onSubmit={signUpHandler}>
-        <label htmlFor="Name"> Name</label>
-        <input
-          id="Name"
-          value={name}
-          placeholder="Enter your name"
-          onChange={(e) => setName(e.target.value)}
-          type="text" />
-        <label htmlFor="Email"> Email</label>
-        <input
-          id="Email"
-          value={email}
-          placeholder="you@yourcompany.com"
-          onChange={(e) => setEmail(e.target.value)}
-          type="email" />
-        <label htmlFor="Password"> Password</label>
-        <input
-          id="Password"
-          value={password}
-          placeholder="enter your password"
-          onChange={(e) => setPassword(e.target.value)}
-          type="password" />
-        <label htmlFor="Confirm password"> Confirm password</label>
-        <input
-          id="Confirm password"
-          value={confirmPassword}
-          placeholder="Enter the same password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          type="password" />
-        <button type="submit">signup</button>
-      </form>
-      <div>
-      </div>
-    </div>
+    <>
+      <Navbar />     
+        <Form  onSubmit={signUpHandler}>
+        <h1>SignupPage</h1>
+          <FormInput
+            id="Name"
+            value={name}
+            placeholder="Enter your name"
+            onChange={(e) => setName(e.target.value)}
+            type="text" 
+            label ="Name"
+            required
+            errorMessage="Please fill the name!"
+            />
+   
+          <FormInput
+            id="Email"
+            value={email}
+            placeholder="you@yourcompany.com"
+            onChange={(e) => setEmail(e.target.value)}
+            label="Email"
+            required
+            errorMessage="Please fill the email!"
+            type="email" />
+  
+          <FormInput
+            id="Password"
+            value={password}
+            placeholder="enter your password"
+            onChange={(e) => setPassword(e.target.value)}
+            label ="Password"
+            required
+            errorMessage="Please fill the password!"
+            autocomplete="new-password"
+            type="password" />
+   
+          <FormInput
+            id="Confirm password"
+            value={confirmPassword}
+            placeholder="Enter the same password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            type="password" 
+            required
+            label="Confirm password"
+            errorMessage="Please fill the password Correctly!"
+            />
+            <span style={{"color":"red"}}>{signUpError}</span>
+          <Btn type="submit">signup</Btn>
+        </Form>
+ 
+      <Footer />
+    </>
   )
 }

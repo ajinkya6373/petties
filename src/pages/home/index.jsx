@@ -5,11 +5,13 @@ import {
     Navbar,
     Slider,
     Shopfor,
-    Footer
+    Footer,
+    Toast
 } from "../../components"
 export default function Homepage() {
   return (
     <Wrapper>
+      <Toast/>
          <Navbar/>
          <Slider/>
          <Shopfor/>

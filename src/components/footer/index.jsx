@@ -81,7 +81,6 @@ export default function Footer() {
                     <Icon src="/assets/Icons/in.svg" social/>
                     <Icon src="/assets/Icons/yt.svg" social/>
            
-
             </InfoSection>
         </Wrapper>
     )

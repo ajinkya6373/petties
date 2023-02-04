@@ -5,7 +5,11 @@ import { BASE_URL } from "../utils/utils";
 
 export const useUserActions = () => {
     const { userData, userDispatch } = useUserData();
-    const { userProfile, isUserLoggedIn } = useUserAuth();
+    const {
+        userProfile,
+        isUserLoggedIn,
+        setToastMsg,
+        setToastType, } = useUserAuth();
     const history = useHistory();
     const isInWishList = (id) => {
         for (let index = 0; index < userData.wishList.length; index++) {
@@ -15,9 +19,10 @@ export const useUserActions = () => {
         }
         return false;
     }
-    const removeFromWishList = async (_id,setToastMsg) => {
+    const removeFromWishList = async (_id) => {
         if (isUserLoggedIn && userProfile?._id) {
-            setToastMsg("Removing")
+            setToastType("remove")
+            setToastMsg("Removing..")
             axios.delete(`${BASE_URL}/wishlist/${userProfile._id}/${_id}`).then((res) => {
                 if (res.data.success) {
                     setToastMsg("Removed from wishlist")
@@ -30,12 +35,14 @@ export const useUserActions = () => {
                     })
                 }
             }).catch((err) => {
+                setToastMsg("something wrong")
                 console.log(err);
             })
         }
     };
-    const addToWishList = async (data, path,setToastMsg) => {
+    const addToWishList = async (data, path) => {
         if (isUserLoggedIn && userProfile?._id) {
+            setToastType("add")
             setToastMsg("Adding...")
             axios.post(`${BASE_URL}/wishlist/${userProfile._id}`, {
                 product: {
@@ -58,7 +65,7 @@ export const useUserActions = () => {
 
             return
         }
-        history.push("/login", {
+        history.push("/signin", {
             state: {
                 from: path,
                 message: "Login to add to wishlist.",
@@ -80,8 +87,9 @@ export const useUserActions = () => {
     }
 
 
-    const addToCartOnClick = async (data, path,setToastMsg) => {
+    const addToCartOnClick = async (data, path) => {
         if (isUserLoggedIn && userProfile?._id) {
+            setToastType("add")
             setToastMsg("Adding...")
             axios.post(`${BASE_URL}/cart/${userProfile._id}`, {
                 product: { ...data }
@@ -101,7 +109,7 @@ export const useUserActions = () => {
             })
             return;
         }
-        history.push("/login", {
+        history.push("/signin", {
             state: {
                 from: path,
                 message: "Login to add to cart.",
@@ -112,25 +120,104 @@ export const useUserActions = () => {
     };
 
 
-    const removeFromCartOnClick = async (_id,setToastMsg) => {
+    const removeFromCartOnClick = async (_id) => {
         if (isUserLoggedIn && userProfile?._id) {
-            setToastMsg("Removing from cart...")
+            setToastType("remove")
+            setToastMsg("Removing..")
             axios.delete(`${BASE_URL}/cart/${userProfile._id}/${_id}`).then((res) => {
-                if (res.data.success) {   
+                if (res.data.success) {
                     setToastMsg("Removed")
                     userDispatch({
                         type: "REMOVE_FROM_CART",
                         payload: {
-                            product: {
-                                _id
-                            }
-                        }
-                    })
+                            product: _id,
+                        },
+                    });
+
                     return
                 }
             })
         }
     };
+
+
+    const decrementQuantity = async (_id, quantity, setDisabled) => {
+        if (isUserLoggedIn && userProfile?._id) {
+            setDisabled(true)
+            setToastType("update");
+            setToastMsg("updating...")
+            const res = await axios.post(
+                `${BASE_URL}/cart/${userProfile._id}/${_id}`,
+                {
+                    quantity: quantity - 1,
+                }
+            );
+
+            if (res.data.success) {
+                setToastMsg("Qunatity updated")
+                userDispatch({
+                    type: "DECREMENT_CART",
+                    payload: {
+                        product: _id,
+                    },
+                });
+                setDisabled(false)
+            }
+            return;
+        }
+    };
+
+    const incrementQuantity = async (_id, quantity, setDisabled) => {
+        if (isUserLoggedIn && userProfile?._id) {
+            setDisabled(true)
+            setToastType("update");
+            setToastMsg("updating...")
+            const res = await axios.post(
+                `${BASE_URL}/cart/${userProfile._id}/${_id}`,
+                {
+                    quantity: quantity + 1,
+                }
+            );
+
+            if (res.data.success) {
+                setToastMsg("Qunatity updated")
+                userDispatch({
+                    type: "INCREMENT_CART",
+                    payload: {
+                        product: _id,
+                    },
+                });
+                setDisabled(false)
+            }
+            return;
+        }
+    };
+
+    const updateAddress = async (id, data) => {
+        if (isUserLoggedIn && userProfile?._id) {
+            setToastType("update");
+            setToastMsg("updating...")
+            axios.post(`${BASE_URL}/address/${userProfile._id}/${id}`, { addressUpdate: data }).then((res) => {
+                if (res.data.success) {
+                    setToastMsg("Address updated!")
+                    userDispatch({
+                        type: "UPDATE_ADDRESS",
+                        payload: {
+                            _id: id,
+                            ...data
+                        }
+                    })
+                    if (JSON.parse(localStorage.getItem("currentAddress"))._id === id) {
+                        localStorage.setItem("currentAddress", JSON.stringify({ _id: id, ...data }))
+                    }
+                    return res.data.success
+                }
+            })
+
+        } else {
+            alert("You need to login");
+        }
+    }
 
     return {
         isInWishList,
@@ -138,6 +225,9 @@ export const useUserActions = () => {
         addToWishList,
         isInCart,
         addToCartOnClick,
-        removeFromCartOnClick
+        removeFromCartOnClick,
+        incrementQuantity,
+        decrementQuantity,
+        updateAddress
     }
 }

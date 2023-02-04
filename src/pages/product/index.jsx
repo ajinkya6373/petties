@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom';
 import axios from "axios";
-import { BASE_URL } from '../../utils/utils';
+import { BASE_URL, discountedPrice } from '../../utils/utils';
 import {
   Navbar,
   Footer,
@@ -28,43 +28,46 @@ import {
 } from "./style/productPage"
 
 import { useUserActions } from '../../hooks';
+import { useHistory } from 'react-router-dom'; 
 
 export default function ProductPage() {
   let { productId } = useParams();
   const [product, setProduct] = useState();
-  const [toastMsg, setToastMsg] =useState("")
-  const [toastType, setToastType] =useState("")
+  const history = useHistory();
   const location = useLocation();
   const path = location.pathname + location.search;
-  const { isInCart, isInWishList, removeFromWishList, removeFromCartOnClick, addToWishList, addToCartOnClick } = useUserActions();
+  const { 
+    isInCart,
+     isInWishList,
+     removeFromWishList,
+     addToWishList,
+     addToCartOnClick
+   } = useUserActions();
   useEffect(() => {
     axios.get(`${BASE_URL}/products/${productId}`).then((res) => {
       setProduct(res.data.product);
     })
   }, [productId])
+  
   const addRemoveWishList = () => {
     if (isInWishList(product._id)) {
-      setToastType("remove")
-      removeFromWishList(product._id,setToastMsg)
+      removeFromWishList(product._id)
     } else {
-      setToastType("add")
-      addToWishList(product, path,setToastMsg);
+      addToWishList(product, path);
     
     }
   }
 
-  const addRemoveFromCart = () => {
+  const addGotoCart = () => {
     if (isInCart(product._id)) {
-      setToastType("remove")
-      removeFromCartOnClick(product._id,setToastMsg)
+      history.push("/cart")
     } else {
-      setToastType("add")
-      addToCartOnClick(product, path,setToastMsg)
+      addToCartOnClick(product, path)
     }
   }
   return (
     <div style={{"position":"relative"}}>
-      <Toast msg={toastMsg} msgType={toastType} imgUrl={product?.imageUrl}/>
+      <Toast imgUrl={product?.imageUrl}/>
       <Navbar />
       {product && <Wrapper>
         <ProductImg src={product?.imageUrl} alt="product" />
@@ -87,9 +90,12 @@ export default function ProductPage() {
               "fontSize": "20px",
               "lineHeight": "24px",
               "fontWeight": "500",
+              "display": "flex",
+              "alignItems" :"center"
 
             }}>
-              <img src="/assets/Icons/Rupees.svg" alt="star" /> {product.price}
+              <img src="/assets/Icons/Rupees.svg" alt="star" /> 
+              { discountedPrice(product.price,product.discountPercentage)}
             </span>
             <span style={{
               fontSize: "20px",
@@ -99,12 +105,13 @@ export default function ProductPage() {
               color: "#000000",
               opacity: "0.6",
               marginLeft: "8px",
-              marginRight: "16px"
+              marginRight: "16px",
+             
             }}>
-              Rs.98.99
+              {parseInt(product.price)}
             </span>
             <RatingBox color={'#CC3D5F'}>
-              {product.discountPercentage}% off
+              {parseInt(product.discountPercentage)}% off
             </RatingBox>
           </PriceContainer>
 
@@ -142,7 +149,7 @@ export default function ProductPage() {
           <Original>100% Original Products</Original>
 
           <ButtonContainer>
-            <AddButton onClick={() => addRemoveFromCart()}>
+            <AddButton onClick={() => addGotoCart()}>
               {isInCart(product._id)
                 ?
                 <span>
@@ -156,7 +163,8 @@ export default function ProductPage() {
                 </span>
               }
             </AddButton>
-            <WishButton isInWishList={isInWishList(product._id)} onClick={() => addRemoveWishList()}> {
+            <WishButton isInWishList={isInWishList(product._id)} 
+            onClick={() => addRemoveWishList()}> {
               isInWishList(product._id)
                 ?
                 <span>

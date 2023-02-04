@@ -5,3 +5,4 @@ export {default as SigninPage} from "./signin";
 export {default as SignupPage} from "./signup";
 export {default as WishListPage} from "./wishlist";
 export {default as ProductPage} from "./product";
+export {default as ProfilePage} from "./profile";

@@ -22,7 +22,12 @@ import {
 } from "./style/browse"
 import { useLocation, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { getTransformedProducts, DropdowmItems, Ratings, Price, availability } from "../../utils/utils";
+import { 
+    getTransformedProducts,
+     DropdowmItems,
+     Ratings,
+     Price,
+     availability } from "../../utils/utils";
 import { usePetsProduct } from "../../context";
 import { useScrollToTop } from "../../hooks"
 
@@ -82,6 +87,7 @@ export default function BrowsePage() {
     return (
         <>
             <Navbar />
+          
             <Wrapper>
                 <SideBar>
                     <PetLabel>{chechPetsList.length > 0 ? chechPetsList.toString() : "All"} - <span>{transFormedProductList.length}</span></PetLabel>

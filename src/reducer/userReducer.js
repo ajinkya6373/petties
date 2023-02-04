@@ -1,5 +1,4 @@
 
-
 export const userReducer = (state,action)=>{
     switch (action.type) {
         case "INITIALIZE_LISTS":
@@ -30,13 +29,60 @@ export const userReducer = (state,action)=>{
             }
         }
         case "REMOVE_FROM_CART":{
-            console.log(action.payload.product._id);
-            console.log(state.cartList);
             return {
                 ...state,
-                cartList:state.cartList.filter((p)=>p.product._id !== action.payload.product._id)
+                cartList:state.cartList.filter((p)=>p.product._id !== action.payload.product)
             }
         }
+        case "INCREMENT_CART":{
+            return{
+                ...state,
+                cartList:state.cartList.map((p)=> {
+                    if(p.product._id ===action.payload.product){
+                       return {
+                        ...p,
+                        quantity:p.quantity + 1
+                       }
+                    }
+                    return p;
+                })
+            }
+        }
+        case "DECREMENT_CART":{
+            return{
+                ...state,
+                cartList:state.cartList.map((p)=> {
+                    if(p.product._id ===action.payload.product){
+                       return {
+                        ...p,
+                        quantity:p.quantity - 1
+                       }
+                    }
+                    return p;
+                })
+            }
+        }
+        case "UPDATE_ADDRESS":{
+            return{
+                ...state,
+                addressList:state.addressList.map((a)=>{
+                    if(a._id===action.payload._id){
+                        return{
+                        ...action.payload
+                        }
+                    }
+                    return a;
+                })
+            }
+        }
+        case "FLUSH_DATA":
+            return {
+              cartList: [],
+              wishList: [],
+              paymentList: [],
+              addressList: [],
+              orderList: [],
+            };
         default:
             break;
     }

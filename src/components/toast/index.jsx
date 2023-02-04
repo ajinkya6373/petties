@@ -1,37 +1,43 @@
 import { useEffect, useRef } from "react";
+
+
 import {
     ToastContainer,
     Image
 } from "./style/toast"
-
-export default function Toast({ msg, imgUrl, msgType }) {
+import { useUserAuth } from "../../context";
+export default function Toast({imgUrl }) {
+    const {  
+        toastMsg,
+        toastType, 
+        setToastMsg,
+        setToastType, } = useUserAuth();
     const toastRef = useRef(null);
     useEffect(() => {
-        if (msg.length > 0) { 
+        if (toastMsg.length > 0) { 
             toastRef.current.style.display = "flex"; 
         }
         let timerid = setTimeout(() => {
             toastRef.current.style.display = "none";
+            setToastMsg("")
+            setToastType("")
         }, 2000);
 
         return () => {
             clearTimeout(timerid);
         };
-    }, [msg, msgType]);
+    }, [toastMsg, toastType]);
 
     return (
         <ToastContainer
             ref={toastRef}
-            style={{
-                display: msg ? "flex" : "none"
-
-            }}
-            msg
-            msgType={msgType}
+            style={{display: toastMsg ? "flex" : "none"}}
+            toastMsg
+            toastType={toastType}
         >
             {imgUrl && <Image src={imgUrl} alt="product" />}
-            {msg}
-            <img src="/assets/Icons/cross.svg" alt=""
+            {toastMsg}
+            <img src="/assets/Icons/cross.svg" alt="close"
                 style={{ "marginLeft": "18px", "cursor": "pointer","marginRight":"10px"}}
                 onClick={() => toastRef.current.style.display = "none"} />
         </ToastContainer>

@@ -4,11 +4,11 @@ import { createContext,useContext,useState} from "react";
 const AuthContext = createContext();
 
 export const AuthProvider =({children}) =>{
-    // const a = JSON.parse(localStorage.getItem("login"))
-    // console.log(a);
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(JSON.parse(localStorage.getItem("login")));
     const [userProfile, setUserData] = useState({});
     const [ loading, setLoading ] = useState(true);
+    const [toastMsg, setToastMsg] =useState("")
+    const [toastType, setToastType] =useState("")
     return (
         <AuthContext.Provider value={{
             isUserLoggedIn,
@@ -16,7 +16,11 @@ export const AuthProvider =({children}) =>{
             userProfile,
             setUserData,
             loading, 
-            setLoading
+            setLoading,
+            setToastMsg,
+            setToastType,
+            toastMsg,
+            toastType
         }}>
             {children}
         </AuthContext.Provider>

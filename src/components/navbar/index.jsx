@@ -59,7 +59,7 @@ export default function Navbar({ cart }) {
                 onClick={() => appendSearchParams(searchTerm)}
               />
               <Search
-                placeholder='search product by name category description '
+                placeholder='Type to search '
                 type='text'
                 onChange={(e) => setSearchTerm(e.target.value)}
                 value={searchTerm}
@@ -95,7 +95,7 @@ export default function Navbar({ cart }) {
           }
           {!cart 
           ? <Options>
-            <Item onClick={() => history.push("/signin")}>
+            <Item onClick={() => history.push("/profile")}>
               <Icon src="/assets/Icons/profile.svg" alt="profile icon" width={24} />
               <Label>
                 Profile

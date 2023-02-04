@@ -81,6 +81,7 @@ img{
 
 export const UpdateQty = styled.div`
 margin-bottom:24px;
+display: flex;
 button{
 width: 34px;
 height: 28px;
@@ -90,7 +91,13 @@ border-radius: 5px;
 background:none;
 cursor:pointer;
 }
-
+img{
+    border: 0.5px solid #e9e9eb;
+    border-radius: 5px;
+    background: none;
+    padding: 0px 7px 3px 7px;
+    cursor:pointer;
+}
 span{
     border: 0.5px solid #e9e9eb;
     border-radius: 5px;
@@ -100,27 +107,27 @@ span{
 }
 
 `
-export const Row = ({label,value,Convenience,bold}) => {
+export const Row = ({ label, value, Convenience, bold }) => {
     return <div style={{
         display: "flex",
         justifyContent: "space-between",
         fontSize: "14px",
         flexWrap: "wrap",
-        marginBottom:"1rem",
-        width:"100%"
+        marginBottom: "1rem",
+        width: "100%"
     }}>
         <div style={{
-                 width: "calc(80% - 1rem)",
-                fontWeight:`${bold ? "bold":500}`
-        }}> 
+            width: "calc(80% - 1rem)",
+            fontWeight: `${bold ? "bold" : 500}`
+        }}>
 
-        {label}
+            {label}
         </div>
         <span style={{
-           textDecorationLine:`${Convenience ? "line-through":"none"} `,
-           color:`${Convenience? "green":"black"}`
+            textDecorationLine: `${Convenience ? "line-through" : "none"} `,
+            color: `${Convenience ? "green" : "black"}`
         }}>
-            ₹{value } {Convenience && "free"}
+            ₹{value} {Convenience && "free"}
         </span>
     </div>
 }
@@ -138,4 +145,60 @@ color: #FFFFFF;
 text-align: center;
 display:unset;
 margin-top:1.5rem;
+`
+
+export const EmptyCart = styled.h2`
+text-align:center;
+margin:10rem;
+`
+
+export const AddressItem = styled.div`
+margin-bottom:1rem;
+display: flex;
+flex-wrap: wrap;
+h4{
+    margin-bottom: 4px;
+}
+input{
+    width:1rem;
+    height: 1rem;
+}
+p{
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+    opacity: 0.8;
+}
+
+`
+
+export const AddressInfo = styled.div`
+margin-left:1rem;
+`
+export const BtnContainer = styled.div`
+margin-top:1rem;
+button{
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 0.3rem;
+    background-color: transparent;
+   
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #d8d8da;;
+    padding: 0.5rem 1rem;
+
+    :nth-child(1) {
+        background-color: var(--primary-color);
+        color:white;
+        border: none;
+        margin-right: 0.625rem;
+      }
+    
+    :nth-child(2){
+        &:hover{
+            background-color:#8e8f98d9;
+        }
+    }
+}
 `

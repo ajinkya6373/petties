@@ -31,6 +31,7 @@ margin-top:1.15rem;
 display:flex;
 align-items: center;
 span{
+ 
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
@@ -70,6 +71,8 @@ export const PriceContainer = styled.div`
 margin-top:12px;
 margin-bottom:12px;
 display:flex;
+align-items: center;
+display: flex;
 align-items: center;
 `
 

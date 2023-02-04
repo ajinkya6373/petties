@@ -1,12 +1,16 @@
 import styled from "styled-components/macro";
 
-export const Wrapper =styled.div`
+export const Wrapper = styled.div`
 display:flex;
 width: 100%;
 height: 80px;
 justify-content: space-between;
 align-items: center;
 box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+position: sticky;
+top: 0;
+z-index: 9999999;
+background-color: #fafafa;
 `
 export const Logo = styled.img`
 position: absolute;
@@ -24,7 +28,7 @@ justify-content: space-between;
 `
 
 export const Icon = styled.img`
-width:${props=>props.width}px;
+width:${props => props.width}px;
 background:none;
 cursor:pointer;
 
@@ -75,7 +79,7 @@ export const Search = styled.input`
 background: none;
 border: none;
 width: 100%;
-
+padding: 0.625rem 1rem;
 &:focus{
     outline:none;
 }

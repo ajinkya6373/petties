@@ -10,7 +10,7 @@ export const useAuthPersist = () => {
     setUserData,
     setLoading } = useUserAuth();
 
-    const {userDispatch,userData} =useUserData();
+    const {userDispatch} =useUserData();
 
     useEffect(()=>{
                    

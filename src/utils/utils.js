@@ -5,6 +5,74 @@ export const Ratings = ["4 stars & above", "3 stars & above", "2 stars & above",
 export const Price = ["0 - 250", "251 - 500", "501 - 1000", "1001 - 2000", "2001 - 5000", "5001 and above"]
 export const availability = ["Assured_delivery", "Onsale"]
 
+export const AddressInput = [
+  {
+    id: 1,
+    name: "name",
+    type: "text",
+    placeholder: "Enter name",
+    label: "Name",
+    errorMessage: "Please fill the name!",
+    required: true,
+
+  },
+  {
+    id: 2,
+    name: "address",
+    type: "text",
+    placeholder: "Enter house no., street, colony",
+    label: "Address",
+    errorMessage: "Please fill the address!",
+    required: true,
+  },
+  {
+    id: 3,
+    name: "city",
+    type: "text",
+    placeholder: "Enter city",
+    label: "City",
+    errorMessage: "Please fill the city!",
+    required: true,
+  },
+  {
+    id: 4,
+    name: "state",
+    type: "text",
+    placeholder: "Enter state",
+    label: "State",
+    errorMessage: "Please fill the state!",
+    required: true,
+  },
+  {
+    id: 5,
+    name: "pinCode",
+    type: "text",
+    placeholder: "Enter zip code",
+    label: "PinCode",
+    errorMessage: "Please enter zipcode!",
+    required: true,
+  },
+  {
+    id: 6,
+    name: "mobileNo",
+    type: "text",
+    placeholder: "Enter mobile Number",
+    label: "MobileNo",
+    errorMessage: "Please enter valid mobileNo!",
+    required: true,
+    pattern: "^[0-9]{10}$"
+  },
+]
+
+export const DummyAddress = {
+  name: "Krishna Gite",
+  address: "B. No. 10, Prerananagar, Adarsh Colony, Maldad Road East , Sangamner",
+  city: "Mumbai",
+  state: "Maharashtra",
+  pinCode: "173468",
+  mobileNo: "8752388912"
+
+}
 
 export const keywords = [
   'Dog',
@@ -21,7 +89,22 @@ export const keywords = [
   'Aquarium Decor'
 
 ]
+export const discountedPrice = (price, discountPer, qunatity=1) => {
+  return (price - (discountPer * (price / 100))) * qunatity;
+}
 
+export const totalPrice = (cartList) => {
+  return cartList.reduce(
+    (acc, item) => {
+      return {
+        totalMRP: acc.totalMRP + item.quantity * item.product.price,
+        discount: acc.discount + discountedPrice(item.product.price,item.product.discountPercentage,item.quantity),
+      }
+
+    },
+    { totalMRP: 0, discount: 0 },
+  );
+};
 
 export const getFilteredProductsByPets = (productList, filterList) => {
 

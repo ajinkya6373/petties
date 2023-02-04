@@ -22,18 +22,7 @@ cursor: pointer;
 position: absolute;
 right: 0.84rem;
 top: 0.93rem;
-display: flex;
-align-items: center;
-justify-content: center;
-width: 32px;
-height: 32px;
-background: #D9D9D9;
-opacity: 0.4;
-border-radius:50%;
-z-index:111111;
-img{
-    opacity: 1;
-}
+
 `
 
 export const ProductTitle = styled.span`
@@ -69,6 +58,7 @@ color: #000000;
 margin-top:8px;
 margin-bottom:18px;
 span{
+    
     font-weight: 600;
     font-size: 10px;
     line-height: 12px;

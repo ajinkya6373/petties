@@ -20,6 +20,7 @@ padding-right: 4.1rem;
 flex-wrap: wrap;
 margin-top: 1rem;
 margin-bottom: 3rem;
+justify-content: center;
 `
 
 export const Item = styled.div`
