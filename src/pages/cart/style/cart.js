@@ -1,6 +1,5 @@
 import styled from "styled-components/macro";
 
-
 export const WrapperCart = styled.div`
 display:flex;
 justify-content: center;
@@ -135,7 +134,7 @@ export const Row = ({ label, value, Convenience, bold }) => {
 
 export const PlaceButton = styled(Button)`
 width:100%;
-background: #FF7700;
+background: var(--primary-color);
 border-radius: 5px;
 border:none;
 font-weight: 600;
@@ -145,6 +144,9 @@ color: #FFFFFF;
 text-align: center;
 display:unset;
 margin-top:1.5rem;
+&:hover {
+    background-color: var(--secondary-color);
+  }
 `
 
 export const EmptyCart = styled.h2`
@@ -200,5 +202,6 @@ button{
             background-color:#8e8f98d9;
         }
     }
+    
 }
 `

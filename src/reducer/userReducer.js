@@ -62,6 +62,12 @@ export const userReducer = (state,action)=>{
                 })
             }
         }
+        case "ADD_ADDRESS": {
+            return {
+                ...state,
+                addressList:[...state.addressList,action.payload.newAddress]
+            }
+        }
         case "UPDATE_ADDRESS":{
             return{
                 ...state,
@@ -73,6 +79,12 @@ export const userReducer = (state,action)=>{
                     }
                     return a;
                 })
+            }
+        }
+        case "DELETE_ADDRESS":{
+            return{
+               ...state,
+                addressList:state.addressList.filter((address)=>address._id!==action.payload.addressId)
             }
         }
         case "FLUSH_DATA":

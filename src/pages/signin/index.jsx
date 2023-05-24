@@ -30,7 +30,6 @@ export default function SigninPage() {
   const loginHandler = (e) => {
     e.preventDefault();
     if(usingTestCredentials){
-      console.log("hello");
       setEmail("ajinkya@gmail.com");
       setPassword("pass123");
       logInUser("ajinkya@gmail.com", "pass123",path,addTo,productId);

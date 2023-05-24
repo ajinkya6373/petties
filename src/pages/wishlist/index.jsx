@@ -1,17 +1,20 @@
-import React from 'react'
-import { useUserAuth, useUserData } from "../../context"
-import { Productard } from '../../components';
+import { useUserData } from "../../context"
+import { Footer, Navbar, Productcard, Toast } from '../../components';
+import { WishlistWrapper } from "./wishlist";
 export default function WishListPage() {
- const { userDispatch, userData } = useUserData();
- console.log(userData.wishList);
+ const { userData } = useUserData();
   return (
-    <div>
+    <>
+      <Navbar/>
+      <Toast/>
+      <WishlistWrapper>
         {
             userData.wishList.map((p)=>{
-                return <Productard key={p._id} data={p}/>
+                return <Productcard key={p._id} data={p}/>
             })
         }
-
-    </div>
+      </WishlistWrapper>
+        <Footer/>
+    </>
   )
 }

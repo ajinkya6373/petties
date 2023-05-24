@@ -2,7 +2,8 @@
 import {
     Navbar,
     Footer,
-    Productard,
+    Productcard,
+    Toast,
 
 } from "../../components"
 import {
@@ -77,9 +78,7 @@ export default function BrowsePage() {
     }
 
     const clearSearchResult = () => {
-        console.log(query.toString())
         query.delete("searchTerm");
-        console.log(query.toString())
         history.push(`/shopfor?${(query.toString())}`)
 
     }
@@ -87,7 +86,8 @@ export default function BrowsePage() {
     return (
         <>
             <Navbar />
-          
+            <Toast imgUrl={product?.imageUrl}/>
+
             <Wrapper>
                 <SideBar>
                     <PetLabel>{chechPetsList.length > 0 ? chechPetsList.toString() : "All"} - <span>{transFormedProductList.length}</span></PetLabel>
@@ -128,7 +128,7 @@ export default function BrowsePage() {
                     <DropDown DropdowmItems={DropdowmItems} setSort={setSort}></DropDown>
                     <ProductWrapper>
                         {transFormedProductList.map((product) => {
-                            return <Productard key={product._id} data={product} />
+                            return <Productcard key={product._id} data={product} />
                         })}
 
                     </ProductWrapper>

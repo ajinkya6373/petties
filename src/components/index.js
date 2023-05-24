@@ -2,8 +2,10 @@ export {default as Navbar} from "./navbar"
 export {default as Slider} from "./slider"
 export {default as Shopfor} from "./shopfor"
 export {default as Footer} from "./footer"
-export {default as Productard} from "./productCard"
+export {default as Productcard} from "./productCard"
 export {default as Toast} from "./toast"
 export {default as Modal} from "./Modal"
-export {default as AddressModal} from "./AddressModal"
 export {default as FormInput} from "./FormInput"
+export {default as LoadingAnimation} from "./loader";
+export {default as AddressForm} from "./AddressManagement/AddressForm";
+export {default as AddressModal} from "./AddressManagement/AddressModal";
