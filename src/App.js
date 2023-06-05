@@ -9,7 +9,8 @@ import {
   WishListPage,
   ProductPage,
   ProfilePage,
-  OrderDetailPage
+  OrderDetailPage,
+  NotFoundPage
 } from "./pages";
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useAuthPersist, useSetPetsProductData } from "./hooks"
@@ -36,6 +37,8 @@ function App() {
           <PrivateRoute component={ProfilePage} path='/profile/orders' exact />
           <PrivateRoute component={ProfilePage} path='/profile/address' exact />
           <PrivateRoute component={OrderDetailPage} path='/orderDetails/:orderId' exact />
+          <PublicRoute component={NotFoundPage} path='*' exact />
+
         </Switch>
       </Router>
     </>

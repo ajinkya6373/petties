@@ -2,7 +2,7 @@
 
 [Petties](https://petties.vercel.app/) - An E-Commerce website for pets.
 
-https://github.com/pranita09/plantique-v1/assets/66015794/6a76a911-71ff-4ef2-b3ec-d64482a99f89
+https://github.com/ajinkya6373/petties/blob/master/public/assets/petties.mp4
 
 
 ## How to install and run locally?

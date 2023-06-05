@@ -7,3 +7,4 @@ export {default as WishListPage} from "./wishlist";
 export {default as ProductPage} from "./product";
 export {default as ProfilePage} from "./profile";
 export{default as OrderDetailPage} from "./orderDetail";
+export{default as NotFoundPage} from "./error";
