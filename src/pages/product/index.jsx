@@ -29,12 +29,15 @@ import {
 
 import { useUserActions } from '../../hooks';
 import { useHistory } from 'react-router-dom'; 
+import { useUserAuth } from '../../context';
 
 export default function ProductPage() {
   let { productId } = useParams();
   const [product, setProduct] = useState();
   const history = useHistory();
   const location = useLocation();
+  const { setLoading } = useUserAuth();
+
   const path = location.pathname + location.search;
   const { 
     isInCart,
@@ -44,9 +47,17 @@ export default function ProductPage() {
      addToCartOnClick
    } = useUserActions();
   useEffect(() => {
-    axios.get(`${BASE_URL}/products/${productId}`).then((res) => {
-      setProduct(res.data.product);
-    })
+    (async()=>{
+      try {
+        setLoading(true)
+      const {data:{product}} = await axios.get(`${BASE_URL}/products/${productId}`)
+       setProduct(product);
+      } catch (error) {
+        alert(error.message)
+      }finally{
+        setLoading(false)
+      }
+    })()
   }, [productId])
   
   const addRemoveWishList = () => {

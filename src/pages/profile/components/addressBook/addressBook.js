@@ -1,6 +1,4 @@
 import styled from "styled-components/macro";
-
-
 export const AddressContainer = styled.div`
   background-color: #f8f8f8;
   border: 2px dashed var(--secondary-color);

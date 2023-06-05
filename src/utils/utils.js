@@ -1,5 +1,6 @@
 
-export const BASE_URL = "https://pettiesBackend.ajinkya6373.repl.co";
+// export const BASE_URL = "https://pettiesBackend.ajinkya6373.repl.co";
+export const BASE_URL = "http://localhost:4001";
 export const DropdowmItems = ["Recommended", "low to high", "high to low"];
 export const Ratings = ["4 stars & above", "3 stars & above", "2 stars & above", "1 stars & above"]
 export const Price = ["0 - 250", "251 - 500", "501 - 1000", "1001 - 2000", "2001 - 5000", "5001 and above"]
@@ -93,12 +94,12 @@ export const discountedPrice = (price, discountPer, qunatity=1) => {
   return (price - (discountPer * (price / 100))) * qunatity;
 }
 
-export const totalPrice = (cartList) => {
-  return cartList.reduce(
-    (acc, item) => {
+export const totalPrice = (arr=[]) => {
+  return arr.reduce(
+    (acc, {quantity,price,discountPercentage}) => {
       return {
-        totalMRP: acc.totalMRP + item.quantity * item.product.price,
-        discount: acc.discount + discountedPrice(item.product.price,item.product.discountPercentage,item.quantity),
+        totalMRP: acc.totalMRP + quantity * price,
+        discount: acc.discount + discountedPrice(price,discountPercentage,quantity),
       }
 
     },
@@ -272,3 +273,18 @@ export const getTransformedProducts = ({
   const sortedProductList = getSortedProducts(filteredProductsByRating, sort);
   return sortedProductList;
 };
+
+export const formatDateTime  = (timeString) => {
+  const date = new Date(timeString);
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = date.toLocaleDateString(undefined, options);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const formattedHours = hours > 12 ? hours - 12 : hours;
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+
+  return `${formattedDate} / ${formattedTime}`;
+};
+

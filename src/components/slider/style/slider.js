@@ -18,18 +18,31 @@ display: flex;
 
 `
 export const HeroTitle = styled.div`
-position:absolute;
-z-index:1111;
-top:198px;
-left:175px;
-font-weight: 700;
-font-size: 64px;
-width: 386px;
-height: 242px;
-line-height: 78px;
-color: #FFFFFF;
-text-shadow: 0px 6px 4px rgba(0, 0, 0, 0.4);
-white-space: break-spaces;
+  position: absolute;
+  z-index: 1111;
+  top: 198px;
+  left: 175px;
+  font-weight: 700;
+  font-size: 64px;
+  width: 386px;
+  height: 242px;
+  line-height: 78px;
+  color: #ffffff;
+  text-shadow: 0px 6px 4px rgba(0, 0, 0, 0.4);
+  white-space: break-spaces;
+  transition: all 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    width: 250px;
+    height: auto;
+    line-height: 48px;
+    text-align: center;
+  }
+};
 `
 export const Slide = styled.div`
 height: 100%;

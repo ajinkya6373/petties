@@ -8,7 +8,6 @@ import { Heading } from "../../profile";
 export default function UserProfile() {
   const {logUserOut} = useAuth()
   const {userProfile:{email,name}} = useUserAuth()
-
   return (
     <ProfileWrapper>
       <Heading>Profile Details</Heading>

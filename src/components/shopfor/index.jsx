@@ -14,32 +14,34 @@ import {
 
 import Productard from "../productCard"
 import { BASE_URL } from "../../utils/utils";
-
+import { useUserAuth } from "../../context";
 
 export default function Shopfor() {
+   const {setLoading } = useUserAuth();
    const [petsData, setPetsData] = useState([]);
    const history = useHistory();
    const [productData, setProductList] = useState([]);
 
-
    useEffect(() => {
-      (() => {
-         axios.get(`${BASE_URL}/pets`).then((res) => {
-            setPetsData(res.data);
-         }).catch((err) => {
-            console.log(err);
-         })
-      })();
-
-   }, [])
-
-   useEffect(() => {
-      (() => {
-         axios.get(`${BASE_URL}/products`).then((res) => {
-            setProductList(res.data.products);
-         })
-      })();
-   }, [])
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+          const [petsRes, productsRes] = await Promise.all([
+            axios.get(`${BASE_URL}/pets`),
+            axios.get(`${BASE_URL}/products`)
+          ]);
+          setPetsData(petsRes.data);
+          setProductList(productsRes.data.products);
+        } catch (error) {
+          alert(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+    
+      fetchData();
+    }, []);
+    
    return (
       <Wrapper>
          <div>
@@ -61,7 +63,7 @@ export default function Shopfor() {
             <Heading>Best Selling Foods</Heading>
             <ProductSlider>
                {
-                  productData.map((product) => {
+                  productData.slice(0,6).map((product) => {
                      return <Productard key={product._id} data={product} />
                   })
                }

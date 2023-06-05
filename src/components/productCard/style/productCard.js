@@ -7,9 +7,8 @@ width:14.75rem;
 box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
 border-radius: 5px;
 margin-left:50px;
-
+position:relative;
 `
-
 export const CardTop = styled.div`
 width: 14.75rem;
 height: 17.5rem;
@@ -24,7 +23,6 @@ right: 0.84rem;
 top: 0.93rem;
 
 `
-
 export const ProductTitle = styled.span`
 font-size: 1rem;
 line-height: 20px;
@@ -52,6 +50,7 @@ margin-right:6px;
 `
 export const PriceContainer = styled(RatingContainer)`
 font-weight: 500;
+margin-bottom: 2px;
 font-size: 16px;
 line-height: 20px;
 color: #000000;
@@ -68,3 +67,29 @@ span{
     margin-left: 4px;
 }
 `
+
+export const AddButton = styled.button`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  border: 2px solid var(--primary-color);
+  background: white;
+  color: black;
+  border-radius: 5px;
+  margin-top: 1rem;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  margin-right: 16px;
+  cursor: pointer;
+  span {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  img {
+    margin-right: 8px;
+    margin-left: 8px;
+    filter: invert(100%); 
+`;

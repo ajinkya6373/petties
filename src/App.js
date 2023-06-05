@@ -8,7 +8,8 @@ import {
   SignupPage,
   WishListPage,
   ProductPage,
-  ProfilePage
+  ProfilePage,
+  OrderDetailPage
 } from "./pages";
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useAuthPersist, useSetPetsProductData } from "./hooks"
@@ -25,15 +26,16 @@ function App() {
         <Switch >
           <PublicRoute component={Homepage} path="/" exact />
           <PublicRoute component={BrowsePage} path="/shopfor" />
-          <PrivateRoute component={CartPage} path="/cart" exact />
           <PublicRoute component={SigninPage} path="/signin" exact />
           <PublicRoute component={SignupPage} path="/signup" exact />
+          <PublicRoute component={ProductPage} path='/product/:productId' exact />
           
           <PrivateRoute component={WishListPage} path='/wishlist' exact />
+          <PrivateRoute component={CartPage} path="/cart" exact />
           <PrivateRoute component={ProfilePage} path='/profile' exact />
           <PrivateRoute component={ProfilePage} path='/profile/orders' exact />
           <PrivateRoute component={ProfilePage} path='/profile/address' exact />
-          <PublicRoute component={ProductPage} path='/product/:productId' exact />
+          <PrivateRoute component={OrderDetailPage} path='/orderDetails/:orderId' exact />
         </Switch>
       </Router>
     </>

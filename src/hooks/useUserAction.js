@@ -233,6 +233,35 @@ export const useUserActions = () => {
         }
     };
 
+    const placeOrderOnClick = async (orderItems) => {
+        try {
+          if (isUserLoggedIn && userProfile?._id) {
+            setLoading(true);
+            const { data:{success,savedItem} } = await axios.post(`${BASE_URL}/order/${userProfile?._id}`, {
+              orderItems
+            })
+            if (success) {
+              userDispatch({
+                type: "ADD_TO_ORDER",
+                payload: {
+                  savedItem
+                }
+              })
+              setToastType("success");
+              setToastMsg("Order placed successfully!");
+              return savedItem._id
+            }
+          }
+        } catch (error) {
+          console.error("Error while placing:", error);
+          setToastType("error");
+          setToastMsg("An error occurred. Please try again.",error);
+        } finally {
+          setLoading(false)
+        }
+      }
+    
+
     const updateAddress = async (id, data) => {
         if (isUserLoggedIn && userProfile?._id) {
             setToastType("update");
@@ -273,41 +302,40 @@ export const useUserActions = () => {
         }
     };
 
-    const addAddress =async(values)=>{
+    const addAddress = async (values) => {
         try {
             setToastType("update");
             setToastMsg("Updating...");
             setLoading(true);
-            const {data} = await axios.post(`${BASE_URL}/address/${userProfile._id}`,{
-                newAddress:{...values}
+            const { data: { success, address } } = await axios.post(`${BASE_URL}/address/${userProfile._id}`, {
+                newAddress: { ...values }
             })
-            if(data.success){
+            if (success) {
                 setToastMsg("Address Added Successfully");
                 userDispatch({
                     type: "ADD_ADDRESS",
                     payload: {
-                        newAddress:{_id:1,...values}
+                        newAddress: address
                     }
                 });
-                return data.success;
+                return success;
             }
         } catch (error) {
             console.log(error);
-        }finally{
+        } finally {
             setLoading(false);
         }
     }
 
-    const deleteAddress =async(addressId)=>{
+    const deleteAddress = async (addressId) => {
         try {
             setToastType("remove");
             setToastMsg("Deleting..");
-            const {data} = await axios.delete(`${BASE_URL}/address/${userProfile._id}/${addressId}`)
-            if(data.success){
-                const selectedAddress = JSON.parse(localStorage.getItem("currentAddress"));
-                console.log(selectedAddress);
-                if (addressId === selectedAddress._id) {
-                  localStorage.removeItem("currentAddress");
+            const { data } = await axios.delete(`${BASE_URL}/address/${userProfile._id}/${addressId}`)
+            if (data.success) {
+                const selectedAddress = JSON.parse(localStorage.getItem("currentAddress")); 
+                if (addressId === selectedAddress?._id) {
+                    localStorage.removeItem("currentAddress");
                 }
                 setToastMsg("Address deleted successfully");
                 userDispatch({
@@ -319,7 +347,7 @@ export const useUserActions = () => {
             }
         } catch (error) {
             console.log(error);
-        }finally{
+        } finally {
             setLoading(false);
         }
     }
@@ -333,6 +361,7 @@ export const useUserActions = () => {
         removeFromCartOnClick,
         incrementQuantity,
         decrementQuantity,
+        placeOrderOnClick,
         updateAddress,
         addAddress,
         deleteAddress,

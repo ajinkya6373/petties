@@ -17,7 +17,6 @@ import {
 import { Link,useLocation} from "react-router-dom";
 
 export default function SigninPage() {
-  
   const location = useLocation();
   const path = location?.state?.state?.from;
   const message = location?.state?.state?.message;

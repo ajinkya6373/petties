@@ -11,74 +11,28 @@ width: 528px;
 position: relative;
 margin-bottom:1rem;
 cursor: pointer;
-button{
-    width: 18%;
-    background: none;
-    text-decoration-line: underline;
-    color: #925FF0;
-    line-height: 100%;
-    cursor: pointer;
-    border: none;
-}
 `
 export const ArrowRight  = styled.img`
 position: absolute;
 right: 23px;
 bottom: 25px;
+width:20px;
+`
+export const ProductImage = styled.img`
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+`;
 
-`
-export const Items  = styled.span`
-font-weight: 500;
-font-size: 14px;
-line-height: 100%;
-`
-export const DateContainer = styled.h3`
-font-weight: 500;
-font-size: 14px;
-line-height: 100%;
-opacity: 0.5;
-`
+export const ProductInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-export const StatusBadge = styled.div`
-position: absolute;
-right: 24px;
-border: 1px solid #83E281;
-border-radius: 12px;
-color: #464646;
-padding: 5px 10px;
-font-weight: 400;
-font-size: 14px;
-line-height: 100%;
-background: #F6FFF6;
-
-${({state})=>{
-    if(state === "pending"){
-        return `
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        background: #E6E6E6;
-        color: #464646;
-        `
-    }
-    if(state === "processing"){
-        return `
-        border: 1px solid #5DB9FF;
-        background: #EBF6FF;
-        color: #15476D;
-        `
-    }
-    if(state === "cancelled"){
-        return `
-        border: 1px solid #f18787;
-        background: #ffd1d1;
-        color: #000000;
-        `
-    }   
-    if(state === "delivered"){
-        return `
-        border: 1px solid #83E281;
-        background: #F6FFF6;
-        color: #158212;
-        `
-    }
-}}
-`
+export const ProductName = styled.span`
+  font-size: 14px;
+  margin-bottom: 5px;
+`;

@@ -6,14 +6,18 @@ import {
   RatingContainer,
   RatingBox,
   PriceContainer,
+  AddButton,
 } from "./style/productCard";
 import { useUserActions } from "../../hooks";
-
 import { SideBySideMagnifier } from "react-image-magnifiers";
 import { useHistory, useLocation } from "react-router";
-
 export default function Productcard({ data }) {
-  const { isInWishList, addToWishList, removeFromWishList } = useUserActions();
+  const { 
+    isInWishList,
+    addToWishList,
+    removeFromWishList,
+    isInCart,
+    addToCartOnClick } = useUserActions();
   const history = useHistory();
   const location = useLocation();
   const path = location.pathname + location.search;
@@ -25,6 +29,14 @@ export default function Productcard({ data }) {
       addToWishList(data, path);
     }
   };
+
+  const addGotoCart = () => {
+    if (isInCart(data._id)) {
+      history.push("/cart")
+    } else {
+      addToCartOnClick(data, path)
+    }
+  }
 
   return (
     <Wrapper>
@@ -55,6 +67,20 @@ export default function Productcard({ data }) {
         &#x20B9;
         {data.price} <span>onwards</span>
       </PriceContainer>
+      <AddButton onClick={() => addGotoCart()}>
+      {isInCart(data._id)
+                ?
+                <span>
+                  <img src="/assets/Icons/arrow.svg" alt="cod" />
+                  GO TO BAG
+                </span>
+                :
+                <span>
+                  ADD TO BAG
+                  <img src="/assets/Icons/smallBag.svg" alt="cod" />
+                </span>
+              }
+      </AddButton>
     </Wrapper>
   );
 }

@@ -101,7 +101,11 @@ export default function Slider() {
   const handleResize = () => {
     setState({ ...state, translate: getWidth(), transition: 0 })
   }
-
+const quotes =["Shop Toys for your loved ones",
+ "Pets deserve the best",
+ "Pamper your furry friends.",
+ "Playful products for happy pets.",
+]
 
 
   return (
@@ -115,7 +119,7 @@ export default function Slider() {
         {
           images.map((slide, i) => {
             return <Slide width={getWidth()} key={slide + i} imgUrl={slide} >
-              <HeroTitle translate ={translate}>Shop Toys for your loved ones </HeroTitle>
+              <HeroTitle translate ={translate}>{quotes[i]}</HeroTitle>
             </Slide>
           })
         }

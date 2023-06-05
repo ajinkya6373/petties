@@ -1,4 +1,4 @@
-import { Footer, Modal, Navbar, Toast,AddressModal } from "../../components";
+import { Footer, Modal, Navbar, Toast, AddressModal } from "../../components";
 
 import { useUserData } from "../../context";
 import { RatingBox, PriceContainer } from "../product/style/productPage";
@@ -17,19 +17,26 @@ import {
   AddressItem,
   BtnContainer,
   AddressInfo,
+  ProductImage,
+  ProductName,
 } from "./style/cart";
 import { useUserActions } from "../../hooks";
 import { useState, useEffect } from "react";
 import { discountedPrice, totalPrice } from "../../utils/utils";
+import { useHistory } from "react-router-dom";
 
 export default function CartPage() {
-  const { userData:{cartList,addressList} } = useUserData();
+  const {
+    userData: { cartList, addressList },
+  } = useUserData();
+  const history = useHistory();
   const {
     incrementQuantity,
     decrementQuantity,
     addToWishList,
     removeFromCartOnClick,
     isInWishList,
+    placeOrderOnClick
   } = useUserActions();
   const [isDisabled, setDisabled] = useState(false);
   const [totalMRP, setTotalMRP] = useState(0);
@@ -38,11 +45,13 @@ export default function CartPage() {
   const [openAddModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [editAddress, setEditAddress] = useState("");
+  const [orderId,setOrderId] = useState("")
   const [selectedAddress, setAddress] = useState(
-    JSON.parse(localStorage.getItem("currentAddress")) || {}
+    JSON.parse(localStorage.getItem("currentAddress"))
   );
   useEffect(() => {
-    const res = totalPrice(cartList);
+    const filteredCart = cartList.reduce((acc,{quantity,product:{price,discountPercentage}})=>[...acc,{quantity,price,discountPercentage}],[])
+    const res = totalPrice(filteredCart);
     setTotalMRP(parseInt(res.totalMRP));
     setcheckOutPrice(parseInt(res.discount));
     setDiscountPrice(parseInt(res.totalMRP) - parseInt(res.discount));
@@ -65,6 +74,20 @@ export default function CartPage() {
     }
   };
 
+  const placeOrder = async()=>{
+    if(selectedAddress){
+      const filteredCart = cartList.reduce((acc,{quantity,product:{_id,name,imageUrl,price,discountPercentage}})=>
+      [...acc,{_id,name,quantity,imageUrl,price,discountPercentage}],[])
+      const orderItems = {
+        items: [...filteredCart],
+        deliveryAddress: selectedAddress,
+      };
+      const id = await placeOrderOnClick(orderItems)
+      setOrderId(id)
+    }else{
+      alert("please select address")
+    }
+  }
   return (
     <>
       <Navbar cart />
@@ -83,19 +106,20 @@ export default function CartPage() {
                   <p>Mobile : {selectedAddress.mobileNo}</p>
                 </div>
               ) : (
-                <h4>please address</h4>
+                <h4>please select the address</h4>
               )}
               <Button color={"#CC3D5F"} onClick={() => setAddModal(true)}>
                 CHANGE ADDRESS
               </Button>
             </AddressBox>
 
-            {cartList.map((p) => {
+            {cartList.map(({quantity,product})=> {
+              const { _id,imageUrl,name,price,discountPercentage} = product;
               return (
-                <ProductBox key={p.product._id}>
-                  <img src={p.product.imageUrl} alt="product-Img" />
+                <ProductBox key={_id}>
+                  <ProductImage src={imageUrl} alt="product-Img" onClick={()=>history.push(`/product/${_id}`)}/>
                   <PBoxRight>
-                    {p.product.name}
+                    <ProductName onClick={()=>history.push(`/product/${_id}`)}>{name}</ProductName>
                     <PriceContainer style={{ marginTop: "8px" }}>
                       <span
                         style={{
@@ -114,9 +138,9 @@ export default function CartPage() {
                         />
                         {parseInt(
                           discountedPrice(
-                            p.product.price,
-                            p.product.discountPercentage,
-                            p.quantity
+                            price,
+                            discountPercentage,
+                            quantity
                           )
                         )}
                       </span>
@@ -132,20 +156,20 @@ export default function CartPage() {
                           marginRight: "16px",
                         }}
                       >
-                        {p.product.price * p.quantity}
+                        {price * quantity}
                       </span>
                       <RatingBox color={"#CC3D5F"}>
-                        {p.product.discountPercentage} % off
+                        {discountPercentage} % off
                       </RatingBox>
                     </PriceContainer>
 
                     <UpdateQty>
-                      {p.quantity > 1 ? (
+                      {quantity > 1 ? (
                         <button
                           onClick={() =>
                             decrementQuantity(
-                              p.product._id,
-                              p.quantity,
+                              _id,
+                              quantity,
                               setDisabled
                             )
                           }
@@ -156,16 +180,16 @@ export default function CartPage() {
                       ) : (
                         <img
                           src="/assets/Icons/delete.svg"
-                          onClick={() => removeFromCartOnClick(p.product._id)}
-                          alt=""
+                          onClick={() => removeFromCartOnClick(_id)}
+                          alt="delete Icon"
                         />
                       )}
-                      <span>{p.quantity}</span>
+                      <span>{quantity}</span>
                       <button
                         onClick={() =>
                           incrementQuantity(
-                            p.product._id,
-                            p.quantity,
+                            _id,
+                            quantity,
                             setDisabled
                           )
                         }
@@ -174,7 +198,7 @@ export default function CartPage() {
                         +
                       </button>
                     </UpdateQty>
-                    <Button onClick={() => moveTowishList(p.product)}>
+                    <Button onClick={() => moveTowishList(product)}>
                       MOVE TO WISHLIST
                     </Button>
                   </PBoxRight>
@@ -183,60 +207,68 @@ export default function CartPage() {
             })}
           </CartLeft>
           <CartRight>
-            <div style={{ marginBottom: "12px" }}>Coupons</div>
-            <Button>
-              <img
-                src="/assets/Icons/coupon.svg"
-                alt="coupon"
-                style={{ marginRight: "12px" }}
-              />
-              Apply coupon
-            </Button>
             <div style={{ marginTop: "28px", marginBottom: "16px" }}>
-              {" "}
               PRICE DETAILS: ({cartList.length} items)
             </div>
             <Row label={" Total MRP"} value={totalMRP} />
             <Row label={"Discount on MRP"} value={discountPrice} />
             <Row label={"Convenience Fee"} value={9.99} Convenience />
             <Row label={"Total Amount"} value={checkOutPrice} bold />
-            <PlaceButton>PLACE ORDER</PlaceButton>
+            <PlaceButton onClick={placeOrder}>PLACE ORDER</PlaceButton>
           </CartRight>
         </WrapperCart>
-      ) : (
-        <EmptyCart> Cart Is Empty</EmptyCart>
-      )}
+      ) : <>
+        <EmptyCart>
+        {orderId ? <Button onClick={() => history.push(`/orderDetails/${orderId}`)} action="true">
+              order Detail
+            </Button> :
+            <Button onClick={() => history.push(`/`)} >Home</Button>
+            }
+        </EmptyCart>
+      </>
+      }
 
       {openAddModal && (
         <Modal closeModal={setAddModal}>
-          {addressList.map((a) => {
-            return (
-              <AddressItem key={a._id}>
-                <input
-                  type="radio"
-                  name="address"
-                  checked={a._id === selectedAddress?._id}
-                  onChange={() => onChange(a)}
-                />
-                <AddressInfo>
-                  <h4>{a.name}</h4>
-                  <p>{a.address}</p>
-                  <p>city: {a.city}</p>
-                  <p>
-                    {a.state}, {a.pinCode}
-                  </p>
-                  <p>Phone Number: {a.mobileNo}</p>
-                  <BtnContainer>
-                    <button onClick={() => clickHandler(a)}>Edit</button>
-                    <button>remove</button>
-                  </BtnContainer>
-                </AddressInfo>
-              </AddressItem>
-            );
-          })}
+          {addressList.length > 0 ? (
+            addressList.map((a) => {
+              return (
+                <AddressItem key={a._id}>
+                  <input
+                    type="radio"
+                    name="address"
+                    checked={a._id === selectedAddress?._id}
+                    onChange={() => onChange(a)}
+                  />
+                  <AddressInfo>
+                    <h4>{a.name}</h4>
+                    <p>{a.address}</p>
+                    <p>city: {a.city}</p>
+                    <p>
+                      {a.state}, {a.pinCode}
+                    </p>
+                    <p>Phone Number: {a.mobileNo}</p>
+                    <BtnContainer>
+                      <button onClick={() => clickHandler(a)}>Edit</button>
+                      <button>remove</button>
+                    </BtnContainer>
+                  </AddressInfo>
+                </AddressItem>
+              );
+            })
+          ) : (
+            <>
+              <h4>please add address</h4>
+              <Button
+                onClick={() => history.push("/profile/address")}
+                action="true"
+              >
+                Add address
+              </Button>
+            </>
+          )}
         </Modal>
       )}
-
       {editModal && (
         <AddressModal
           closeModal={setEditModal}

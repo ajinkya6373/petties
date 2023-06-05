@@ -20,8 +20,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [signUpError, setSignUpError] = useState("");
-  const [loading, setLoading] = useState(false);
-
+  const {setLoading} = useUserAuth();
   const isPasswordMatched =
     confirmPassword !== "" && confirmPassword === password;
 
@@ -30,9 +29,6 @@ export default function SignupPage() {
   const isPasswordValid = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/.test(
     password
   );
-
-
-
 
   const signUpHandler = async (e) => {
     setSignUpError("");
@@ -62,7 +58,6 @@ export default function SignupPage() {
     if(!isPasswordMatched){
       setSignUpError("Both passwords must match!");
     }
-    // setSignUpError("Plase fi");
     setLoading(false);
   };
 

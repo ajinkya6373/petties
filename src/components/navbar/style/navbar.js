@@ -1,9 +1,12 @@
 import styled from "styled-components/macro";
 
 export const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "logo NavMiddle Navleft";
   width: 100%;
-  height: 80px;
+  padding: 20px;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
@@ -11,24 +14,58 @@ export const Wrapper = styled.div`
   top: 0;
   z-index: 9999999;
   background-color: #fafafa;
+  transition: padding 0.3s ease-in-out, grid-template-areas 0.3s ease-in-out;
+
+  @media (max-width: 768px) {
+    padding: 20px 0px 0px 0px;
+    grid-template-columns: 1fr ;
+    grid-template-rows: auto auto;
+    grid-template-areas:"logo Navleft" 
+    "NavMiddle  NavMiddle ";
+  }
 `;
 
 export const Logo = styled.img`
+  grid-area: logo;
   width: 6.9375rem;
   height: 2.25rem;
   margin-left: 64px;
+  transition: width 0.3s ease, margin-left 0.3s ease;
+  @media (max-width: 768px) {
+    margin-left: 20px;
+    width: 5.9375rem;
+    justify-self: center;
+  }
+`;
+
+export const NavMiddle = styled.div`
+  grid-area: NavMiddle;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    justify-content: center;
+    margin-top:1rem;
+  }
 `;
 
 export const Navleft = styled.div`
+  grid-area: Navleft;
   display: flex;
-  align-items: center;
-  margin-right: 4.14rem;
-  justify-content: space-between;
+  justify-content: flex-end;
+  padding-right: 2.5rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding-right: 20;
+  }
 `;
 
 export const SearchContainer = styled.div`
   display: flex;
-  width: 490px;
+  width: 100%;
   height: 40px;
   background: #f5f5f6;
   border: 1px solid #f0f0f2;
@@ -73,7 +110,6 @@ export const SearchOptions = styled.ul`
     padding: 0.25rem 1rem;
     font-weight: 300;
     cursor: pointer;
-
     :hover {
       background: #eaeaec;
     }
@@ -89,7 +125,7 @@ export const NavItem = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left: 3em;
+  margin-left: 2em;
   cursor: pointer;
 `;
 

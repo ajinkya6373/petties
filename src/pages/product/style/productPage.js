@@ -6,6 +6,14 @@ margin-top:5rem;
 margin-left:4rem;
 margin-right:4rem;
 margin-bottom:104px;
+flex-wrap: wrap;
+justify-content: center;
+@media (max-width: 768px) {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top:1rem;
+
+  }
 
 `
 export const ProductImg = styled.img`
@@ -14,9 +22,17 @@ margin-right:3.18rem;
 object-fit: contain;
 cursor: grab;
 box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+@media (max-width: 768px) {
+    height: 20rem;
+    margin-bottom:1rem;
+
+}
 `
 export const Info = styled.div`
 flex:1;
+@media (max-width: 768px) {
+    padding:1rem;
+}
 `
 
 export const Name = styled.span`
@@ -30,8 +46,8 @@ export const RatingContainer = styled.div`
 margin-top:1.15rem;
 display:flex;
 align-items: center;
+flex-wrap: wrap;
 span{
- 
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
@@ -128,14 +144,14 @@ margin-top:16px;
 ` 
  export const ButtonContainer =styled.div`
  display:flex;
-
+ flex-wrap: wrap;
  `
  export const AddButton = styled.button`
 width: 311px;
 height: 40px;
 background: #FF7700;
 border-radius: 5px;
-margin-top:40px;
+margin-top:1rem;
 color:white;
 font-weight: 700;
 font-size: 14px;
@@ -152,6 +168,7 @@ cursor:pointer;
         margin-right:8px;
         margin-left:8px;
     }
+
  `
  export const WishButton = styled(AddButton)`
  border: 1px solid #000000;

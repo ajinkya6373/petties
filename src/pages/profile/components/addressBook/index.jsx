@@ -40,7 +40,7 @@ export default function AddressBook() {
           const { _id, name, mobileNo, address, city, state, pinCode } =
             addressItem;
           return (
-            <AddressContainer key={address._id}>
+            <AddressContainer key={_id}>
               <AttributeContainer>
                 <AttributeName>Name:</AttributeName>
                 <AttributeValue>{name}</AttributeValue>

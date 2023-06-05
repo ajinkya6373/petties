@@ -62,6 +62,13 @@ export const userReducer = (state,action)=>{
                 })
             }
         }
+        case "ADD_TO_ORDER":{
+            return{
+                ...state,
+                orderList:[...state.orderList,action.payload.savedItem],
+                cartList:[]
+            }
+        }
         case "ADD_ADDRESS": {
             return {
                 ...state,

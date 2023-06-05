@@ -13,6 +13,7 @@ import {
   NavItem,
   CartBadge,
   WishlistBadge,
+  NavMiddle,
 } from "./style/navbar";
 import { Link } from "react-router-dom";
 import { useHistory, useLocation } from "react-router";
@@ -82,8 +83,7 @@ export default function Navbar() {
       <Link to="/">
         <Logo src="/assets/Icons/logo.svg" />
       </Link>
-
-      <Navleft>
+      <NavMiddle>
         <SearchContainer>
           <SearchIcon
             src="/assets/Icons/search.svg"
@@ -111,6 +111,8 @@ export default function Navbar() {
             </SearchOptions>
           )}
         </SearchContainer>
+      </NavMiddle>
+      <Navleft>
         <Options>
           <NavItem onClick={handleProfileClick}>
             <Icon

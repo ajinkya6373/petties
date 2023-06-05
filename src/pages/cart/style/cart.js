@@ -1,19 +1,21 @@
 import styled from "styled-components/macro";
-
 export const WrapperCart = styled.div`
 display:flex;
 justify-content: center;
 margin-top:3.75rem;
 margin-bottom:3.75rem;
 flex-wrap: wrap;
-
 `
-
 export const CartLeft = styled.div`
 border-right: 1px solid #e9e9eb;
 padding-right:2.5rem;
 padding-top:2.5rem;
-
+@media (max-width: 768px) {
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+    border:none;
+}
 `
 
 export const CartRight = styled(CartLeft)`
@@ -58,17 +60,27 @@ border-radius: 5px;
 margin-bottom:1.5rem;
 padding:1rem 0 1rem 1.12rem;
 display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+padding: 1rem;
 font-weight: 500;
 font-size: 16px;
 line-height: 20px;
 box-shadow: inset 0 0 0 1px #e9e9eb;
-img{
-    width: 111px;
-    height: 148px;
-    object-fit: contain;
+`
+export const ProductImage = styled.img`
+width: 111px;
+height: 148px;
+object-fit: contain;
+cursor:pointer;
+`
+export const ProductName = styled.p`
+cursor:pointer;
+:hover{
+    text-decoration:underline;
 }
 `
-
 export const PBoxRight = styled.div`
 margin-left:1.5rem;
 img{
