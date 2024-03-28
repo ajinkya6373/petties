@@ -1,5 +1,5 @@
 
-export const BASE_URL = "https://pettiesBackend.ajinkya6373.repl.co";
+export const BASE_URL = "https://pettiesbackend.onrender.com";
 export const DropdowmItems = ["Recommended", "low to high", "high to low"];
 export const Ratings = ["4 stars & above", "3 stars & above", "2 stars & above", "1 stars & above"]
 export const Price = ["0 - 250", "251 - 500", "501 - 1000", "1001 - 2000", "2001 - 5000", "5001 and above"]
